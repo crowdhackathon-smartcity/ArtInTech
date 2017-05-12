@@ -1,0 +1,110 @@
+﻿@model WebApp.Devices
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="content-header">
+    <h1>
+        Λεπτομέριες Τερματικού
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index", "Dashboard")"><i class="fa fa-dashboard"></i> Αρχική</a></li>
+        <li class="active">Λεπτομέριες Τερματικού</li>
+    </ol>
+</section>
+
+
+<div class="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title"></h3>
+                    <div class="form-horizontal">
+                        <div>
+                            <dl class="dl-horizontal">
+                                <dt>
+                                    Κωδικός Συσκευής :
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.devCode)
+                                </dd>
+
+                                <dt>
+                                    Τύπος :
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.devType)
+                                </dd>
+
+                                <dt>
+                                    API Id :
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.devApi)
+                                </dd>
+
+                                <dt>
+                                    API Key :
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.devApiKey)
+                                </dd>
+
+                                <dt>
+                                    Τοποθεσία :
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.devLocation)
+                                </dd>
+
+                                <dt>
+                                    IP :
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.devIP)
+                                </dd>
+
+                                <dt>
+                                    UserName :
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.devAdmin)
+                                </dd>
+
+                                <dt>
+                                    Κωδικός :
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.devPass)
+                                </dd>
+
+                                <dt>
+                                    Επιλεγμένο Layout :
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.DevLayout.dvLtName)
+                                </dd>
+
+                            </dl>
+                        </div>
+                        <p>
+                            @Html.ActionLink("Edit", "Edit", new { id = Model.devAutoId }) |
+                            @Html.ActionLink("Back to List", "Index")
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,94 @@
+﻿@model IEnumerable<WebApp.Devices>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="content-header">
+    <h1>
+        Τερματικό
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index", "Dashboard")"><i class="fa fa-dashboard"></i> Αρχική</a></li>
+        <li class="active">Τερματικό</li>
+    </ol>
+</section>
+<div class="content">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <p>
+                        @Html.ActionLink("Δημιουργία Τερματικού", "Create", null, new { @class = "btn bg-green pull-right" })
+                    </p>
+                </div>
+                <table class="table">
+                    <tr>
+                        <th>
+                            Κωδικός Συσκευής
+                        </th>
+                        <th>
+                            Τύπος
+                        </th>
+                        <th>
+                            API Id
+                        </th>
+                        <th>
+                            API Key
+                        </th>
+                        <th>
+                            Τοποθεσία
+                        </th>
+                        <th>
+                            IP
+                        </th>
+                        <th>
+                            UserName
+                        </th>
+                        <th>
+                            Κωδικός
+                        </th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.devCode)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.devType)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.devApi)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.devApiKey)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.devLocation)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.devIP)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.devAdmin)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.devPass)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.devAutoId }) |
+                                @Html.ActionLink("Details", "Details", new { id = item.devAutoId }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.devAutoId })
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,155 @@
+﻿@model WebApp.Models.ViewModel.ViewDevices
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <h1>
+        Επεξεργασία Τερματικού
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index", "Dashboard")"><i class="fa fa-dashboard"></i> Αρχική</a></li>
+        <li class="active">Τερματικό</li>
+    </ol>
+</section>
+
+@using (Html.BeginForm("Edit", "Devices", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="content">
+        @Html.HiddenFor(model => model.devices.devAutoId)
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"></h3>
+                    </div>
+                    <div class="form-horizontal">
+                        <div class="box-body">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(model => model.devices.devAutoId)
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="devices_devCode">Κωδικός Συσκευής</label>
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.devices.devCode, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.devices.devCode, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="dropdowntipo">Τύπος</label>
+                                <div class="col-sm-10">
+                                    @Html.HiddenFor(Model => Model.devices.devType)
+                                    <select id="dropdowndevType" class="form-control valid">
+                                        <option value="RaspberryWin">Raspberry windows iot</option>
+                                        <option value="Arduino">Arduino</option>
+                                        <option value="IntelComputeStick">Intel Compute Stick</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="devices_devApi">API Id</label>
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.devices.devApi, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.devices.devApi, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="devices_devApiKey">API Key</label>
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.devices.devApiKey, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.devices.devApiKey, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="devices_devLocation">Τοποθεσία</label>
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.devices.devLocation, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.devices.devLocation, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="devices_devIP">IP</label>
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.devices.devIP, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.devices.devIP, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="devices_devAdmin">UserName</label>
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.devices.devAdmin, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.devices.devAdmin, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="devices_devPass">Κωδικός</label>
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.devices.devPass, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.devices.devPass, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="devices_devLayoutId">Κωδικός Εμφάνισης</label>
+                                <div class="col-md-10">
+                                    @Html.HiddenFor(model => model.devices.devLayoutId)
+                                    <select id="DevLayoutsList" class="form-control select2" data-placeholder="Select a State" style="width: 100%;">
+                                        <option value="-1">Κανένα</option>
+                                        @foreach (var cevlay in Model.devlayout)
+                                        {
+                                            if (cevlay.dvLtAutoId == Model.devices.devLayoutId)
+                                            {
+                                                <option selected="selected" value="@cevlay.dvLtAutoId">@cevlay.dvLtName</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@cevlay.dvLtAutoId">@cevlay.dvLtName</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="box-footer">
+                                @Html.ActionLink("Πίσω", "Index", null, new { @class = "btn btn-default" })
+                                <input type="submit" value="Αποθήκευση" class="btn btn-info pull-right" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () {
+            //Initialize Select2 Elements
+            $(".select2").select2();
+        });
+        $(document).ready(function () {
+            document.getElementById('devices_devType').value = document.getElementById('dropdowndevType').value;
+            document.getElementById('DevLayoutsList').value = document.getElementById('devices_devLayoutId').value;
+
+            $('#dropdowndevType').change(function () {
+                document.getElementById('devices_devType').value = $('#dropdowndevType option:selected').val();
+            });
+
+            $('#DevLayoutsList').change(function () {
+                document.getElementById('devices_devLayoutId').value = $('#DevLayoutsList option:selected').val();
+            });
+
+        });
+    </script>
+}
