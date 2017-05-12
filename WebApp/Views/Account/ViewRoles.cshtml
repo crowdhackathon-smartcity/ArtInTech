@@ -1,0 +1,53 @@
+﻿@model IEnumerable<AspNetRoles>
+@{
+    ViewBag.Title = "ViewRoles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" />
+
+<section class="content-header">
+    <h1>
+        Ρόλοι
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index", "Dashboard")"><i class="fa fa-dashboard"></i> Αρχική</a></li>
+        <li class="active">Ρόλοι</li>
+    </ol>
+</section>
+
+<div class="content-header clearfix">
+    <div class="pull-right">
+        <a href="@Url.Action("CreateRole", "Account")" class="btn bg-blue">
+            <i class="fa fa-plus-square"></i>
+            Προσθήκη Ομάδας
+        </a>
+    </div>
+</div>
+
+<div class="content">
+    <div class="form-horizontal">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table id="GroupsUsers" class="table table-bordered table-hover" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Ρόλοι</th>
+                                <th>Ενέργεια</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var data in Model)
+                            {
+                                <tr>
+                                    <th>@data.Name</th>
+                                    <th class="text-center"><a class='btn btn-success' href='/Admin/EditUser/@data.Id'>Επεξεργασία</a></th>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+﻿@model IEnumerable<AspNetUsers>
+@{
+    ViewBag.Title = "Χρήστες";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="content-header">
+    <h1>
+        Χρήστες
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index", "Dashboard")"><i class="fa fa-dashboard"></i> Αρχική</a></li>
+        <li class="active">Χρήστες</li>
+    </ol>
+</section>
+
+<div class="content">
+    <div class="form-horizontal">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table id="GroupsUsers" class="table table-bordered table-hover" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Ονοματεπώνυμο</th>
+                                <th>Περιοχή</th>
+                                <th>Υπηρεσία</th>
+                                <th>Τελευταία Δραστηριότητα</th>
+                                <th>Ενέργεια</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var data in Model)
+                            {
+                                <tr>
+                                    <th>@data.Email</th>
+                                    <th>@data.Stuff.stfFullName</th>
+                                    <th>@data.Stuff.stfLocation</th>
+                                    <th>@data.Stuff.stfPblSrvc</th>
+                                    <th>@data.Stuff.stfLastActivity</th>
+                                    <th class="text-center"><a class='btn btn-success' href='/WebApp/Account/EditUser/@data.Id'>Επεξεργασία</a></th>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

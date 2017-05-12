@@ -1,0 +1,44 @@
+﻿@model WebApp.AspNetRoles
+@{
+    ViewBag.Title = "CreateRole";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    <section class="content-header">
+        <h1>
+            Προσθήκη Ομάδας
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("Index", "Dashboard")"><i class="fa fa-dashboard"></i> Αρχική</a></li>
+            <li class="active">Προσθήκη Ομάδας</li>
+        </ol>
+    </section>
+
+    <div class="content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Προσθήκη Ομάδας</h3>
+                    </div>
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary("", new { @class = "text-danger" })
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label class="col-md-2 control-label" for="stuffreg_stfFullName">Ονοματεπώνυμο</label>
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                            @Html.ActionLink("Πίσω", "ViewRoles", null, new { @class = "btn btn-default" })
+                            <input type="submit" value="Αποθήκευση" class="btn btn-info pull-right" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

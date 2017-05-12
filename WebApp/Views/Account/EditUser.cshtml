@@ -1,0 +1,165 @@
+﻿@model WebApp.Models.ViewModel.ViewEditUser
+@{
+    ViewBag.Title = "EditUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.User.Id);
+    @Html.HiddenFor(model => model.RoleId);
+    @Html.HiddenFor(model => model.UserRoleNames);
+    <section class="content-header">
+        <h1>
+            Επεξεργασία χρήστη
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("Index", "Dashboard")"><i class="fa fa-dashboard"></i> Αρχική</a></li>
+            <li><a href="@Url.Action("ViewUser", "Account")"> Χρήστες</a></li>
+            <li class="active">Επεξεργασία χρήστη</li>
+        </ol>
+    </section>
+    <div class="content-header clearfix">
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                Save
+            </button>
+            <button type="submit" name="save-continue" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                Save and Continue Edit
+            </button>
+            <button type="submit" name="LogIn" class="btn bg-green">
+                <i class="fa fa-trash-o"></i>
+                LogIn
+            </button>
+            <button type="button" class="btn bg-green Sendemail" data-toggle="modal" data-target="#sendemail-window">
+                <i class="fa fa-at"></i>
+                Send email
+            </button>
+            @*<button class="button">Open Email</button>*@
+            <button type="submit" name="delete" class="btn bg-red">
+                <i class="fa fa-trash-o"></i>
+                Delete
+            </button>
+        </div>
+    </div>
+    <div class="content">
+        <div class="form-horizontal">
+            <div id="user-edit" class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#activity" data-toggle="tab">Προσωπικές ρυθμίσεις</a></li>
+                    <li><a href="#timeline" data-toggle="tab">Λεπτομέρειες λογαριασμού</a></li>
+                    <li><a href="#settings" data-toggle="tab">Λεπτομέρειες τιμολόγησης</a></li>
+                    <li><a href="#orders" data-toggle="tab">Παραγγελίες</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="active tab-pane" id="activity">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    @Html.LabelFor(model => model.User.Email, htmlAttributes: new { @class = "label-wrapper control-label col-md-2" })
+                                </div>
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.User.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.User.Email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <label class="label-wrapper control-label col-md-2" for="Password" title="">Κωδικός</label><div class="ico-help" title="The customer's password."></div>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="input-group">
+                                        <input autocomplete="off" class="text-box single-line form-control" id="Password" name="Password" type="text" value="">
+                                        <div class="input-group-btn">
+                                            <button type="submit" name="changepassword" class="btn btn-info">
+                                                Αλλαξε κωδικό
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <span class="field-validation-valid" data-valmsg-for="Password" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    @Html.LabelFor(model => model.stuffreg.stfFullName, htmlAttributes: new { @class = "label-wrapper control-label col-md-2" })
+                                </div>
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.stuffreg.stfFullName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.stuffreg.stfFullName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <label class="label-wrapper control-label col-md-2">Roles</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <select name="SelectRoles" class="form-control select2" data-placeholder="Select a State" style="width: 100%;">
+                                        @foreach (var Roless in Model.Roles)
+                                        {
+                                            if (Roless.Id == Model.RoleId)
+                                            {
+                                                <option selected="selected">@Roless.Name</option>
+                                            }
+                                            else
+                                            {
+                                                <option>@Roless.Name</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    @Html.LabelFor(model => model.stuffreg.stfLocation, new { @class = "label-wrapper control-label col-md-2" })
+                                </div>
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(model => model.stuffreg.stfLocation, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.stuffreg.stfLocation)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    @Html.LabelFor(model => model.stuffreg.stfPblSrvc, new { @class = "label-wrapper control-label col-md-2" })
+                                </div>
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(model => model.stuffreg.stfPblSrvc, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.stuffreg.stfPblSrvc)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="timeline">
+
+                    </div>
+                    <div class="tab-pane" id="settings">
+
+                    </div>
+                    <div class="tab-pane" id="orders">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+@section Scripts{
+    <script src="~/Plugins/select2/select2.full.min.js"></script>
+
+    <script>
+        $(function () {
+            //Initialize Select2 Elements
+            $(".select2").select2();
+        });
+        $(document).ready(function () {
+            $('.Sendemail').on('click', function () {
+                window.location.href = "mailto:@Model.User.Email";
+                return false;
+            });
+        });
+    </script>
+}
