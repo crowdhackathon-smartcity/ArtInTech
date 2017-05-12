@@ -1,0 +1,715 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="hacaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DeviceIO">
+          <Key>
+            <PropertyRef Name="ioName" />
+          </Key>
+          <Property Name="ioName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ioType" Type="nvarchar" MaxLength="5" />
+          <Property Name="ioValType" Type="nvarchar" MaxLength="50" />
+          <Property Name="ioValue" Type="nvarchar" MaxLength="50" />
+          <Property Name="ioDevId" Type="int" />
+        </EntityType>
+        <EntityType Name="Devices">
+          <Key>
+            <PropertyRef Name="devAutoId" />
+          </Key>
+          <Property Name="devAutoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="devCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="devType" Type="nvarchar" MaxLength="50" />
+          <Property Name="devApi" Type="nvarchar" MaxLength="50" />
+          <Property Name="devApiKey" Type="nvarchar" MaxLength="50" />
+          <Property Name="devLocation" Type="nvarchar" MaxLength="500" />
+          <Property Name="devIP" Type="nvarchar" MaxLength="20" />
+          <Property Name="devAdmin" Type="nvarchar" MaxLength="50" />
+          <Property Name="devPass" Type="nvarchar" MaxLength="50" />
+          <Property Name="devLayoutId" Type="int" />
+        </EntityType>
+        <EntityType Name="DevLayout">
+          <Key>
+            <PropertyRef Name="dvLtAutoId" />
+          </Key>
+          <Property Name="dvLtAutoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dvLtName" Type="nvarchar" MaxLength="50" />
+          <Property Name="dvLtVersion" Type="nvarchar" MaxLength="50" />
+          <Property Name="dvLtDescription" Type="nvarchar" MaxLength="50" />
+          <Property Name="dvLtLastUpdate" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="LayoutSettings">
+          <Key>
+            <PropertyRef Name="ltSId" />
+          </Key>
+          <Property Name="ltSId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ltSDevLayoutId" Type="int" Nullable="false" />
+          <Property Name="ltSType" Type="varchar" MaxLength="50" />
+          <Property Name="ltSContent" Type="varchar(max)" />
+          <Property Name="ltSValue" Type="varchar(max)" />
+          <Property Name="ItSPosition" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Stuff">
+          <Key>
+            <PropertyRef Name="stfId" />
+          </Key>
+          <Property Name="stfId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="stfFullName" Type="nvarchar" MaxLength="100" />
+          <Property Name="stfLocation" Type="nvarchar" MaxLength="50" />
+          <Property Name="stfLastActivity" Type="nvarchar" MaxLength="100" />
+          <Property Name="stfPblSrvc" Type="nvarchar" MaxLength="200" />
+          <Property Name="stfDevice" Type="int" />
+        </EntityType>
+        <EntityType Name="stuff_Has_Device">
+          <Key>
+            <PropertyRef Name="stuff" />
+            <PropertyRef Name="device" />
+          </Key>
+          <Property Name="stuff" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="device" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AspNetUsers_Stuff">
+          <End Role="Stuff" Type="Self.Stuff" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Stuff">
+              <PropertyRef Name="stfId" />
+            </Principal>
+            <Dependent Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Devices_DevLayout">
+          <End Role="DevLayout" Type="Self.DevLayout" Multiplicity="0..1" />
+          <End Role="Devices" Type="Self.Devices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DevLayout">
+              <PropertyRef Name="dvLtAutoId" />
+            </Principal>
+            <Dependent Role="Devices">
+              <PropertyRef Name="devLayoutId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LayoutSettings_DevLayout">
+          <End Role="DevLayout" Type="Self.DevLayout" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="LayoutSettings" Type="Self.LayoutSettings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DevLayout">
+              <PropertyRef Name="dvLtAutoId" />
+            </Principal>
+            <Dependent Role="LayoutSettings">
+              <PropertyRef Name="ltSDevLayoutId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_stuff_Has_Device_Devices">
+          <End Role="Devices" Type="Self.Devices" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="stuff_Has_Device" Type="Self.stuff_Has_Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Devices">
+              <PropertyRef Name="devAutoId" />
+            </Principal>
+            <Dependent Role="stuff_Has_Device">
+              <PropertyRef Name="device" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_stuff_Has_Device_Stuff">
+          <End Role="Stuff" Type="Self.Stuff" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="stuff_Has_Device" Type="Self.stuff_Has_Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stuff">
+              <PropertyRef Name="stfId" />
+            </Principal>
+            <Dependent Role="stuff_Has_Device">
+              <PropertyRef Name="stuff" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="hacaModelStoreContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeviceIO" EntityType="Self.DeviceIO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Devices" EntityType="Self.Devices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DevLayout" EntityType="Self.DevLayout" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LayoutSettings" EntityType="Self.LayoutSettings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stuff" EntityType="Self.Stuff" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="stuff_Has_Device" EntityType="Self.stuff_Has_Device" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AspNetUsers_Stuff" Association="Self.FK_AspNetUsers_Stuff">
+            <End Role="Stuff" EntitySet="Stuff" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Devices_DevLayout" Association="Self.FK_Devices_DevLayout">
+            <End Role="DevLayout" EntitySet="DevLayout" />
+            <End Role="Devices" EntitySet="Devices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LayoutSettings_DevLayout" Association="Self.FK_LayoutSettings_DevLayout">
+            <End Role="DevLayout" EntitySet="DevLayout" />
+            <End Role="LayoutSettings" EntitySet="LayoutSettings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_stuff_Has_Device_Devices" Association="Self.FK_stuff_Has_Device_Devices">
+            <End Role="Devices" EntitySet="Devices" />
+            <End Role="stuff_Has_Device" EntitySet="stuff_Has_Device" />
+          </AssociationSet>
+          <AssociationSet Name="FK_stuff_Has_Device_Stuff" Association="Self.FK_stuff_Has_Device_Stuff">
+            <End Role="Stuff" EntitySet="Stuff" />
+            <End Role="stuff_Has_Device" EntitySet="stuff_Has_Device" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="hacaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="Stuff" Relationship="Self.FK_AspNetUsers_Stuff" FromRole="AspNetUsers" ToRole="Stuff" />
+          <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+        </EntityType>
+        <EntityType Name="DeviceIO">
+          <Key>
+            <PropertyRef Name="ioName" />
+          </Key>
+          <Property Name="ioName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ioType" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="ioValType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ioValue" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ioDevId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Devices">
+          <Key>
+            <PropertyRef Name="devAutoId" />
+          </Key>
+          <Property Name="devAutoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="devCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="devType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="devApi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="devApiKey" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="devLocation" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="devIP" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="devAdmin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="devPass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="devLayoutId" Type="Int32" />
+          <NavigationProperty Name="DevLayout" Relationship="Self.FK_Devices_DevLayout" FromRole="Devices" ToRole="DevLayout" />
+          <NavigationProperty Name="Stuff" Relationship="Self.stuff_Has_Device" FromRole="Devices" ToRole="Stuff" />
+        </EntityType>
+        <EntityType Name="DevLayout">
+          <Key>
+            <PropertyRef Name="dvLtAutoId" />
+          </Key>
+          <Property Name="dvLtAutoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dvLtName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="dvLtVersion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="dvLtDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="dvLtLastUpdate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Devices" Relationship="Self.FK_Devices_DevLayout" FromRole="DevLayout" ToRole="Devices" />
+          <NavigationProperty Name="LayoutSettings" Relationship="Self.FK_LayoutSettings_DevLayout" FromRole="DevLayout" ToRole="LayoutSettings" />
+        </EntityType>
+        <EntityType Name="LayoutSettings">
+          <Key>
+            <PropertyRef Name="ltSId" />
+          </Key>
+          <Property Name="ltSId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ltSDevLayoutId" Type="Int32" Nullable="false" />
+          <Property Name="ltSType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ltSContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ltSValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ItSPosition" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DevLayout" Relationship="Self.FK_LayoutSettings_DevLayout" FromRole="LayoutSettings" ToRole="DevLayout" />
+        </EntityType>
+        <EntityType Name="Stuff">
+          <Key>
+            <PropertyRef Name="stfId" />
+          </Key>
+          <Property Name="stfId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="stfFullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="stfLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="stfLastActivity" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="stfPblSrvc" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="stfDevice" Type="Int32" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_AspNetUsers_Stuff" FromRole="Stuff" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Devices" Relationship="Self.stuff_Has_Device" FromRole="Stuff" ToRole="Devices" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetUsers_Stuff">
+          <End Role="Stuff" Type="Self.Stuff" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Stuff">
+              <PropertyRef Name="stfId" />
+            </Principal>
+            <Dependent Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Devices_DevLayout">
+          <End Role="DevLayout" Type="Self.DevLayout" Multiplicity="0..1" />
+          <End Role="Devices" Type="Self.Devices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DevLayout">
+              <PropertyRef Name="dvLtAutoId" />
+            </Principal>
+            <Dependent Role="Devices">
+              <PropertyRef Name="devLayoutId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LayoutSettings_DevLayout">
+          <End Role="DevLayout" Type="Self.DevLayout" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="LayoutSettings" Type="Self.LayoutSettings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DevLayout">
+              <PropertyRef Name="dvLtAutoId" />
+            </Principal>
+            <Dependent Role="LayoutSettings">
+              <PropertyRef Name="ltSDevLayoutId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="*" />
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
+        </Association>
+        <Association Name="stuff_Has_Device">
+          <End Role="Devices" Type="Self.Devices" Multiplicity="*" />
+          <End Role="Stuff" Type="Self.Stuff" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="hacaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" />
+          <EntitySet Name="DeviceIO" EntityType="Self.DeviceIO" />
+          <EntitySet Name="Devices" EntityType="Self.Devices" />
+          <EntitySet Name="DevLayout" EntityType="Self.DevLayout" />
+          <EntitySet Name="LayoutSettings" EntityType="Self.LayoutSettings" />
+          <EntitySet Name="Stuff" EntityType="Self.Stuff" />
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetUsers_Stuff" Association="Self.FK_AspNetUsers_Stuff">
+            <End Role="Stuff" EntitySet="Stuff" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Devices_DevLayout" Association="Self.FK_Devices_DevLayout">
+            <End Role="DevLayout" EntitySet="DevLayout" />
+            <End Role="Devices" EntitySet="Devices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LayoutSettings_DevLayout" Association="Self.FK_LayoutSettings_DevLayout">
+            <End Role="DevLayout" EntitySet="DevLayout" />
+            <End Role="LayoutSettings" EntitySet="LayoutSettings" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <AssociationSet Name="stuff_Has_Device" Association="Self.stuff_Has_Device">
+            <End Role="Devices" EntitySet="Devices" />
+            <End Role="Stuff" EntitySet="Stuff" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="hacaModelStoreContainer" CdmEntityContainer="hacaEntities">
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="hacaModel.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="hacaModel.AspNetRoles">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserClaims">
+            <EntityTypeMapping TypeName="hacaModel.AspNetUserClaims">
+              <MappingFragment StoreEntitySet="AspNetUserClaims">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserLogins">
+            <EntityTypeMapping TypeName="hacaModel.AspNetUserLogins">
+              <MappingFragment StoreEntitySet="AspNetUserLogins">
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="hacaModel.AspNetUsers">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeviceIO">
+            <EntityTypeMapping TypeName="hacaModel.DeviceIO">
+              <MappingFragment StoreEntitySet="DeviceIO">
+                <ScalarProperty Name="ioName" ColumnName="ioName" />
+                <ScalarProperty Name="ioType" ColumnName="ioType" />
+                <ScalarProperty Name="ioValType" ColumnName="ioValType" />
+                <ScalarProperty Name="ioValue" ColumnName="ioValue" />
+                <ScalarProperty Name="ioDevId" ColumnName="ioDevId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Devices">
+            <EntityTypeMapping TypeName="hacaModel.Devices">
+              <MappingFragment StoreEntitySet="Devices">
+                <ScalarProperty Name="devAutoId" ColumnName="devAutoId" />
+                <ScalarProperty Name="devCode" ColumnName="devCode" />
+                <ScalarProperty Name="devType" ColumnName="devType" />
+                <ScalarProperty Name="devApi" ColumnName="devApi" />
+                <ScalarProperty Name="devApiKey" ColumnName="devApiKey" />
+                <ScalarProperty Name="devLocation" ColumnName="devLocation" />
+                <ScalarProperty Name="devIP" ColumnName="devIP" />
+                <ScalarProperty Name="devAdmin" ColumnName="devAdmin" />
+                <ScalarProperty Name="devPass" ColumnName="devPass" />
+                <ScalarProperty Name="devLayoutId" ColumnName="devLayoutId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DevLayout">
+            <EntityTypeMapping TypeName="hacaModel.DevLayout">
+              <MappingFragment StoreEntitySet="DevLayout">
+                <ScalarProperty Name="dvLtAutoId" ColumnName="dvLtAutoId" />
+                <ScalarProperty Name="dvLtName" ColumnName="dvLtName" />
+                <ScalarProperty Name="dvLtVersion" ColumnName="dvLtVersion" />
+                <ScalarProperty Name="dvLtDescription" ColumnName="dvLtDescription" />
+                <ScalarProperty Name="dvLtLastUpdate" ColumnName="dvLtLastUpdate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LayoutSettings">
+            <EntityTypeMapping TypeName="hacaModel.LayoutSettings">
+              <MappingFragment StoreEntitySet="LayoutSettings">
+                <ScalarProperty Name="ltSId" ColumnName="ltSId" />
+                <ScalarProperty Name="ltSDevLayoutId" ColumnName="ltSDevLayoutId" />
+                <ScalarProperty Name="ltSType" ColumnName="ltSType" />
+                <ScalarProperty Name="ltSContent" ColumnName="ltSContent" />
+                <ScalarProperty Name="ltSValue" ColumnName="ltSValue" />
+                <ScalarProperty Name="ItSPosition" ColumnName="ItSPosition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stuff">
+            <EntityTypeMapping TypeName="hacaModel.Stuff">
+              <MappingFragment StoreEntitySet="Stuff">
+                <ScalarProperty Name="stfId" ColumnName="stfId" />
+                <ScalarProperty Name="stfFullName" ColumnName="stfFullName" />
+                <ScalarProperty Name="stfLocation" ColumnName="stfLocation" />
+                <ScalarProperty Name="stfLastActivity" ColumnName="stfLastActivity" />
+                <ScalarProperty Name="stfPblSrvc" ColumnName="stfPblSrvc" />
+                <ScalarProperty Name="stfDevice" ColumnName="stfDevice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="hacaModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetRoles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="stuff_Has_Device" TypeName="hacaModel.stuff_Has_Device" StoreEntitySet="stuff_Has_Device">
+            <EndProperty Name="Devices">
+              <ScalarProperty Name="devAutoId" ColumnName="device" />
+            </EndProperty>
+            <EndProperty Name="Stuff">
+              <ScalarProperty Name="stfId" ColumnName="stuff" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

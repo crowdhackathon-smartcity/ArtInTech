@@ -1,0 +1,82 @@
+﻿@using Microsoft.AspNet.Identity
+<aside class="main-sidebar">
+    <section class="sidebar">
+        <div class="user-panel">
+            <div class="pull-left image">
+                <img src="~/img/User.png" class="img-circle" alt="User Image" />
+            </div>
+            <div class="pull-left info">
+                <p>@User.Identity.GetUserName()</p>
+                <i class="fa fa-circle text-success"></i> Online
+            </div>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="header">Μενού</li>
+            @{string act = ""; }
+            @if (ViewContext.RouteData.Values["controller"].ToString().ToLower() == "account")
+            {
+                act = "active";
+            }
+            else
+            {
+                act = "";
+            }
+            <li class="treeview @act">
+                <a href="#">
+                    <i class="fa ion-email-unread"></i> <span>Χρήστες</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="@Url.Action("Register", "Account")"><i class="fa fa-book"></i>Νέος χρήστης</a></li>
+                    <li><a href="@Url.Action("ViewUser", "Account")"><i class="fa ion-person-stalker"></i>Χρήστες</a></li>
+                    <li><a href="@Url.Action("ViewRoles", "Account")"><i class="fa fa-book"></i>Ρόλοι Χρήστων</a></li>
+                    @*<li><a href="#"><i class="ion-volume-mute"></i>Blacklist</a></li>*@
+                </ul>
+            </li>
+            @if (ViewContext.RouteData.Values["controller"].ToString().ToLower() == "devices")
+            {
+                act = "active";
+            }
+            else
+            {
+                act = "";
+            }
+            <li class="treeview @act">
+                <a href="#">
+                    <i class="fa ion-email-unread"></i> <span>Τερματικά</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="@Url.Action("Create", "Devices")"><i class="fa fa-book"></i>Νέο Τερματικό</a></li>
+                    <li><a href="@Url.Action("Index", "Devices")"><i class="fa fa-book"></i>Τερματικά</a></li>
+                </ul>
+            </li>
+            @if (ViewContext.RouteData.Values["controller"].ToString().ToLower() == "layouts")
+            {
+                act = "active";
+            }
+            else
+            {
+                act = "";
+            }
+
+            <li class="treeview @act">
+                <a href="#">
+                    <i class="fa ion-ios-bookmarks"></i><span>Layout</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+
+                    <li><a href="@Url.Action("Create", "Layouts")"><i class="fa fa-book"></i>Νέο Layout</a></li>
+                    <li><a href="@Url.Action("Index", "Layouts")"><i class="fa ion-person-stalker"></i>Layouts</a></li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+</aside>
