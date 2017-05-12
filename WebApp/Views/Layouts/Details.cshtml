@@ -1,0 +1,51 @@
+﻿@model WebApp.DevLayout
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>DevLayout</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.dvLtName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dvLtName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dvLtVersion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dvLtVersion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dvLtDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dvLtDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dvLtLastUpdate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dvLtLastUpdate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.dvLtAutoId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
