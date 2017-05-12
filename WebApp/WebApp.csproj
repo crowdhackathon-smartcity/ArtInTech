@@ -250,6 +250,8 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\NotificationExtensions.cs" />
+    <Compile Include="Models\ViewModel\ViewEditUser.cs" />
+    <Compile Include="Models\ViewModel\ViewRegister.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Stuff.cs">

@@ -9,6 +9,11 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using WebApp.Models;
+using WebApp.Models.ViewModel;
+using System.Collections.Generic;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Net;
+using System.Data.Entity;
 
 namespace WebApp.Controllers
 {
@@ -17,12 +22,13 @@ namespace WebApp.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        hacaEntities db = new hacaEntities();
 
         public AccountController()
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -34,9 +40,9 @@ namespace WebApp.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -79,7 +85,13 @@ namespace WebApp.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    {
+                        var user = await UserManager.FindByNameAsync(model.Email);
+                        var userdb = db.AspNetUsers.Find(user.Id);
+                        userdb.Stuff.stfLastActivity = DateTime.Now.ToString();
+                        db.SaveChanges();
+                        return RedirectToLocal(returnUrl);
+                    }
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -120,7 +132,7 @@ namespace WebApp.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -136,7 +148,6 @@ namespace WebApp.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
@@ -145,18 +156,21 @@ namespace WebApp.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(ViewRegister model)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
+                var user = new ApplicationUser { UserName = model.aspreg.Email, Email = model.aspreg.Email };
+                model.stuffreg.stfId = user.Id;
+                model.stuffreg.stfLastActivity = DateTime.Now.ToString();
+                db.Stuff.Add(model.stuffreg);
+                await db.SaveChangesAsync();
+                var result = await UserManager.CreateAsync(user, model.aspreg.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -170,6 +184,46 @@ namespace WebApp.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        public ActionResult ViewUser()
+        {
+            List<AspNetUsers> users = db.AspNetUsers.ToList();
+            return View(users);
+        }
+
+        public ActionResult ViewRoles()
+        {
+            List<AspNetRoles> roles = db.AspNetRoles.ToList();
+            return View(roles);
+        }
+
+        public ActionResult CreateRole()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateRole(AspNetRoles Role)
+        {
+            if (Role.Name != String.Empty)
+            {
+                var roleManager = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
+                if (!roleManager.RoleExists(Role.Name))
+                {
+                    var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                    role.Name = Role.Name;
+                    roleManager.Create(role);
+                    NotificationExtensions.AddNotification(this, "Role Saved", NotificationType.SUCCESS);
+                }
+                else
+                {
+                    NotificationExtensions.AddNotification(this, "Role Exist", NotificationType.WARNING);
+                }
+                return RedirectToAction("ViewRoles");
+            }
+            NotificationExtensions.AddNotification(this, "Εrror Save!!!", NotificationType.ERROR);
+            return RedirectToAction("CreateRole");
         }
 
         //
@@ -422,6 +476,52 @@ namespace WebApp.Controllers
 
             base.Dispose(disposing);
         }
+
+        public ActionResult EditUser(string id)
+        {
+            if (String.IsNullOrWhiteSpace(id))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            AspNetUsers GetUserDb = db.AspNetUsers.Find(id);
+            if (GetUserDb == null)
+            {
+                return HttpNotFound();
+            }
+
+            var GetRoles = db.AspNetRoles.ToList();
+
+            var UserID = id;
+            var userRoles = db.AspNetRoles.Include(r => r.AspNetUsers).ToList();
+
+
+
+            var userRoleNames = (from r in userRoles
+                                 from u in r.AspNetUsers
+                                 where u.Id == UserID
+                                 select r.Name).ToList();
+            var userRoleId = (from r in userRoles
+                              from u in r.AspNetUsers
+                              where u.Id == UserID
+                              select r.Id).ToList();
+
+            Stuff stuff = db.Stuff.Where(a => a.stfId == id).SingleOrDefault();
+
+
+            ViewEditUser userviewmodel = new ViewEditUser
+            {
+                User = GetUserDb,
+                Roles = userRoles,
+                UserRoleNames = userRoleNames,
+                RoleId = userRoleId[0]
+            };
+
+            //usermodel.UserRoleNames = userRoleNames;
+            //sermodel.Roles = GetRoles;
+            return View(userviewmodel);
+        }
+
+
 
         #region Helpers
         // Used for XSRF protection when adding external logins
