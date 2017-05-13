@@ -516,6 +516,7 @@
     <Content Include="Views\Layouts\Details.cshtml" />
     <Content Include="Views\Layouts\Edit.cshtml" />
     <Content Include="Views\Layouts\Index.cshtml" />
+    <Content Include="Views\Layouts\Settings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
