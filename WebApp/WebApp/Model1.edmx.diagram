@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="752ac493b81a4d2b85f1b0d5e750c710" Name="Diagram1" ZoomLevel="72">
+        <EntityTypeShape EntityType="hacaModel.C__MigrationHistory" Width="1.5" PointX="5.75" PointY="7.625" />
+        <EntityTypeShape EntityType="hacaModel.AspNetRoles" Width="1.5" PointX="5.25" PointY="0.75" />
+        <EntityTypeShape EntityType="hacaModel.AspNetUserClaims" Width="1.5" PointX="9.75" PointY="4.875" />
+        <EntityTypeShape EntityType="hacaModel.AspNetUserLogins" Width="1.5" PointX="9.75" PointY="2.25" />
+        <EntityTypeShape EntityType="hacaModel.AspNetUsers" Width="1.5" PointX="7.5" PointY="2.5" />
+        <EntityTypeShape EntityType="hacaModel.DeviceIO" Width="1.5" PointX="3" PointY="7" />
+        <EntityTypeShape EntityType="hacaModel.Devices" Width="1.5" PointX="3" PointY="2.875" />
+        <EntityTypeShape EntityType="hacaModel.DevLayout" Width="1.5" PointX="0.75" PointY="6.25" />
+        <EntityTypeShape EntityType="hacaModel.LayoutSettings" Width="1.5" PointX="3" PointY="10.125" />
+        <EntityTypeShape EntityType="hacaModel.Stuff" Width="1.5" PointX="5.25" PointY="3.25" />
+        <EntityTypeShape EntityType="hacaModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="7.625" />
+        <AssociationConnector Association="hacaModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="hacaModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="hacaModel.FK_AspNetUsers_Stuff" />
+        <AssociationConnector Association="hacaModel.FK_DeviceIO_DevLayout" />
+        <AssociationConnector Association="hacaModel.FK_Devices_DevLayout" />
+        <AssociationConnector Association="hacaModel.FK_LayoutSettings_DevLayout" />
+        <AssociationConnector Association="hacaModel.AspNetUserRoles" />
+        <AssociationConnector Association="hacaModel.stuff_Has_Device" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

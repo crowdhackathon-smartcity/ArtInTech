@@ -1,0 +1,127 @@
+﻿@model WebApp.Models.ViewModel.ViewLayoutSettings
+@{
+    ViewBag.Title = "Settins";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="content-header">
+    <h1>
+        Τερματικό
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index", "Dashboard")"><i class="fa fa-dashboard"></i> Αρχική</a></li>
+        <li class="active">Layout</li>
+    </ol>
+</section>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Layout</h3>
+                    </div>
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="box-body">
+                            @for (int i = 0; i < Model.LayoutSettingsList.Count; i++)
+                            {
+                                if (Model.LayoutSettingsList[i].ltSType == "image")
+                                {
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2" for="set_ltSContent">@Model.LayoutSettingsList[i].ltSType</label>
+                                        <div class="col-sm-5">
+                                            @Html.TextBoxFor(m => m.LayoutSettingsList[i].ltSContent, new { @class = "form-control", @readonly = "readonly" })
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <div class="input-group">
+                                                <input type="file" id="FileUpload" accept=".jpeg,.png" class="form-control" />
+                                                <div class="input-group-btn">
+                                                    <input type="button" id="Upload" value="Upload" settingsid="@Model.LayoutSettingsList[i].ltSId" inoutid="@Html.IdFor(m => m.LayoutSettingsList[i].ltSContent)" class="btn btn-default" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                                else if (Model.LayoutSettingsList[i].ltSType == "browser")
+                                {
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2" for="set_ltSContent">@Model.LayoutSettingsList[i].ltSType</label>
+                                        <div class="col-sm-5">
+                                            @Html.TextBoxFor(m => m.LayoutSettingsList[i].ltSContent, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                }
+                                else if (Model.LayoutSettingsList[i].ltSType == "text")
+                                {
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2" for="set_ltSContent">@Model.LayoutSettingsList[i].ltSType</label>
+                                        <div class="col-sm-5">
+                                            @Html.TextBoxFor(m => m.LayoutSettingsList[i].ltSContent, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                }
+                                else if (Model.LayoutSettingsList[i].ltSType == "video")
+                                {
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2" for="set_ltSContent">@Model.LayoutSettingsList[i].ltSType</label>
+                                        <div class="col-sm-5">
+                                            @Html.TextBoxFor(m => m.LayoutSettingsList[i].ltSContent, new { @class = "form-control", @readonly = "readonly" })
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <div class="input-group">
+                                                <input type="file" id="FileUpload" accept=".mpg4" class="form-control" />
+                                                <div class="input-group-btn">
+                                                    <input type="button" id="Upload" value="Upload" settingsid="@Model.LayoutSettingsList[i].ltSId" class="btn btn-default" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            <div class="box-footer">
+                                @Html.ActionLink("Πίσω", "Index", null, new { @class = "btn btn-default" })
+                                <input type="submit" value="Αποθήκευση" class="btn btn-info pull-right" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#Upload").click(function () {
+                var formData = new FormData();
+                var totalFiles = document.getElementById("FileUpload").files.length;
+                var id = document.getElementById("Upload").getAttribute("settingsid");
+                var inoutid = document.getElementById("Upload").getAttribute("inoutid");
+                for (var i = 0; i < totalFiles; i++) {
+                    var file = document.getElementById("FileUpload").files[i];
+                    formData.append("FileUpload", file);
+                }
+                $.ajax({
+                    type: "POST",
+                    url: '/Layouts/Upload/' + id,
+                    data: formData,
+                    dataType: 'json',
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+
+                        document.getElementById(inoutid).value = "Johnny Bravo";
+                        alert(response.responseText);
+                    },
+                    error: function (error) {
+                        alert("errror");
+                    }
+                });
+            });
+        });
+    </script>
+}

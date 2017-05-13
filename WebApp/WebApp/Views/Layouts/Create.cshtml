@@ -1,0 +1,164 @@
+﻿@model WebApp.Models.ViewModel.ViewLayout
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/plugins/Layouts/style.css" rel="stylesheet" />
+<section class="content-header">
+    <h1>
+        Προσθήκη Layout
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index", "Dashboard")"><i class="fa fa-dashboard"></i> Αρχική</a></li>
+        <li class="active">Προσθήκη Layout</li>
+    </ol>
+</section>
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="box box-info">
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="Devlayout_dvLtName">Name :</label>
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Devlayout.dvLtName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Devlayout.dvLtName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="Devlayout_dvLtDescription">Description :</label>
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Devlayout.dvLtDescription, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Devlayout.dvLtDescription, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="dropdowntipo">Τύπος</label>
+                                <div class="col-sm-10">
+                                    @Html.HiddenFor(Model => Model.Devlayout.dvLtType)
+                                    <select id="dropdowndevType" class="form-control valid">
+                                        <option value="1">Layoute</option>
+                                        <option value="2">IO-Device</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12" id="layoutediv" >
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Σχεδιασμός Layout</h3>
+                    </div>
+                    <div class="form-horizontal">
+                        <div class="box-body">
+                            <div id="content">
+                                <div id="sidebar">
+                                    <div id="image" class="element ui-widget-content" style="top:20px;">
+                                        <img src="~/plugins/Layouts/image.png" />
+                                    </div>
+                                    <div id="browser" class="element ui-widget-content" style="top:140px;">
+                                        <img src="~/plugins/Layouts/browser.png" />
+                                    </div>
+                                    <div id="text" class="element ui-widget-content" style="top:260px;">
+                                        <img src="~/plugins/Layouts/text.png" />
+                                    </div>
+                                    <div id="video" class="element ui-widget-content" style="top:380px;">
+                                        <img src="~/plugins/Layouts/video.png" />
+                                    </div>
+                                </div>
+
+                                <div id="wrapper" class="droppable ui-widget-header">
+
+                                </div>
+                            </div>
+                            @Html.HiddenFor(model => model.result)                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12" id="iodiv" style="display: none;">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Σχεδιασμός IO</h3>
+                    </div>
+                    <div class="form-horizontal">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="Devlayout_dvLtName">Input :</label>
+                                <div class="col-md-2">
+                                    @Html.EditorFor(model => model.inputCount, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.inputCount, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="Devlayout_dvLtName">Output :</label>
+                                <div class="col-md-2">
+                                    @Html.EditorFor(model => model.outputCount, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.outputCount, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="Devlayout_dvLtName">Virtual :</label>
+                                <div class="col-md-2">
+                                    @Html.EditorFor(model => model.virtualCount, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.virtualCount, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="box box-info">
+                    <div class="form-horizontal">
+                        <div class="box-body">
+                            <div class="box-footer">
+                                @Html.ActionLink("Πίσω", "Index", null, new { @class = "btn btn-default" })
+                                <input type="submit" value="Αποθήκευση" class="btn btn-info pull-right" />
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@section Scripts{
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/plugins/Layouts/custom.js"></script>
+
+    <script>
+            $(document).ready(function () {
+                document.getElementById('Devlayout_dvLtType').value = document.getElementById('dropdowndevType').value;
+            
+                $('#dropdowndevType').change(function () {
+                    if ($('#dropdowndevType option:selected').val() != 1)
+                    {
+                        $('#layoutediv').toggle(500).slideUp();
+                        $('#iodiv').toggle(500).slideDown();
+                        
+                    }
+                    else
+                    {
+                        $('#iodiv').toggle(500).slideUp();
+                        $('#layoutediv').toggle(500).slideDown();
+                    }
+
+                    document.getElementById('Devlayout_dvLtType').value = $('#dropdowndevType option:selected').val();
+                });
+            });
+    </script>
+}
