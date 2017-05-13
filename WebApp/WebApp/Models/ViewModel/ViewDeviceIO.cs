@@ -5,10 +5,8 @@ using System.Web;
 
 namespace WebApp.Models.ViewModel
 {
-    public class ViewLayoutSettings
+    public class ViewDeviceIO
     {
-        public int idlu { get; set; }
-        public List<LayoutSettings> LayoutSettingsList { get; set; }
         public List<DeviceIO> DeviceIO { get; set; }
     }
 }

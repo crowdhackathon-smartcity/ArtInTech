@@ -72,10 +72,11 @@
           </Key>
           <Property Name="ioId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ioName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ioPortName" Type="nvarchar" MaxLength="50" />
           <Property Name="ioType" Type="nvarchar" MaxLength="5" />
           <Property Name="ioValType" Type="nvarchar" MaxLength="50" />
           <Property Name="ioValue" Type="nvarchar" MaxLength="50" />
-          <Property Name="ioDevId" Type="int" />
+          <Property Name="ioDeviceId" Type="int" />
         </EntityType>
         <EntityType Name="Devices">
           <Key>
@@ -91,6 +92,7 @@
           <Property Name="devAdmin" Type="nvarchar" MaxLength="50" />
           <Property Name="devPass" Type="nvarchar" MaxLength="50" />
           <Property Name="devLayoutId" Type="int" />
+          <Property Name="devLayoutIOId" Type="int" />
         </EntityType>
         <EntityType Name="DevLayout">
           <Key>
@@ -223,7 +225,7 @@
               <PropertyRef Name="dvLtAutoId" />
             </Principal>
             <Dependent Role="DeviceIO">
-              <PropertyRef Name="ioDevId" />
+              <PropertyRef Name="ioDeviceId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -451,10 +453,11 @@
           </Key>
           <Property Name="ioId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ioName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ioPortName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ioType" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="ioValType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ioValue" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ioDevId" Type="Int32" />
+          <Property Name="ioDeviceId" Type="Int32" />
           <NavigationProperty Name="DevLayout" Relationship="hacaModel.FK_DeviceIO_DevLayout" FromRole="DeviceIO" ToRole="DevLayout" />
         </EntityType>
         <EntityType Name="Devices">
@@ -471,6 +474,7 @@
           <Property Name="devAdmin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="devPass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="devLayoutId" Type="Int32" />
+          <Property Name="devLayoutIOId" Type="Int32" />
           <NavigationProperty Name="DevLayout" Relationship="hacaModel.FK_Devices_DevLayout" FromRole="Devices" ToRole="DevLayout" />
           <NavigationProperty Name="Stuff" Relationship="hacaModel.stuff_Has_Device" FromRole="Devices" ToRole="Stuff" />
         </EntityType>
@@ -575,7 +579,7 @@
               <PropertyRef Name="dvLtAutoId" />
             </Principal>
             <Dependent Role="DeviceIO">
-              <PropertyRef Name="ioDevId" />
+              <PropertyRef Name="ioDeviceId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -677,10 +681,11 @@
           <EntitySetMapping Name="DeviceIO">
             <EntityTypeMapping TypeName="hacaModel.DeviceIO">
               <MappingFragment StoreEntitySet="DeviceIO">
-                <ScalarProperty Name="ioDevId" ColumnName="ioDevId" />
+                <ScalarProperty Name="ioDeviceId" ColumnName="ioDeviceId" />
                 <ScalarProperty Name="ioValue" ColumnName="ioValue" />
                 <ScalarProperty Name="ioValType" ColumnName="ioValType" />
                 <ScalarProperty Name="ioType" ColumnName="ioType" />
+                <ScalarProperty Name="ioPortName" ColumnName="ioPortName" />
                 <ScalarProperty Name="ioName" ColumnName="ioName" />
                 <ScalarProperty Name="ioId" ColumnName="ioId" />
               </MappingFragment>
@@ -689,6 +694,7 @@
           <EntitySetMapping Name="Devices">
             <EntityTypeMapping TypeName="hacaModel.Devices">
               <MappingFragment StoreEntitySet="Devices">
+                <ScalarProperty Name="devLayoutIOId" ColumnName="devLayoutIOId" />
                 <ScalarProperty Name="devLayoutId" ColumnName="devLayoutId" />
                 <ScalarProperty Name="devPass" ColumnName="devPass" />
                 <ScalarProperty Name="devAdmin" ColumnName="devAdmin" />

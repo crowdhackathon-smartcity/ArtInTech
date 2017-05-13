@@ -46,8 +46,9 @@
                                 <div class="col-sm-10">
                                     @Html.HiddenFor(Model => Model.Devlayout.dvLtType)
                                     <select id="dropdowndevType" class="form-control valid">
-                                        <option value="1">Layoute</option>
-                                        <option value="2">IO-Device</option>
+                                        <option value="1">Layoute - IO-Device</option>
+                                        <option value="2">Layoute</option>
+                                        <option value="3">IO-Device</option>                                        
                                     </select>
                                 </div>
                             </div>
@@ -88,7 +89,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-12" id="iodiv" style="display: none;">
+            <div class="col-lg-12" id="iodiv" >
                 <div class="box box-info">
                     <div class="box-header with-border">
                         <h3 class="box-title">Σχεδιασμός IO</h3>
@@ -145,16 +146,20 @@
                 document.getElementById('Devlayout_dvLtType').value = document.getElementById('dropdowndevType').value;
             
                 $('#dropdowndevType').change(function () {
-                    if ($('#dropdowndevType option:selected').val() != 1)
+                    if ($('#dropdowndevType option:selected').val() == 1)
                     {
-                        $('#layoutediv').toggle(500).slideUp();
+                        $('#layoutediv').toggle(500).slideDown();
                         $('#iodiv').toggle(500).slideDown();
                         
                     }
-                    else
-                    {
-                        $('#iodiv').toggle(500).slideUp();
+                    else if ($('#dropdowndevType option:selected').val() == 2) {
                         $('#layoutediv').toggle(500).slideDown();
+                        $('#iodiv').toggle(500).slideUp();
+
+                    }
+                    else if ($('#dropdowndevType option:selected').val() == 3) {
+                        $('#iodiv').toggle(500).slideDown();
+                        $('#layoutediv').toggle(500).slideUp();
                     }
 
                     document.getElementById('Devlayout_dvLtType').value = $('#dropdowndevType option:selected').val();

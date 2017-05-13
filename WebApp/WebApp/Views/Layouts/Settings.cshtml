@@ -15,77 +15,174 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+    @Html.HiddenFor(Model => Model.idlu)
     <div class="content">
         <div class="row">
+            @if (Model.LayoutSettingsList != null)
+            {
+                <div class="col-lg-12">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Layout</h3>
+                        </div>
+                        <div class="form-horizontal">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="box-body">
+                                @for (int i = 0; i < Model.LayoutSettingsList.Count; i++)
+                                {
+                                    @Html.HiddenFor(Model => Model.LayoutSettingsList[i].ltSId)
+                                    if (Model.LayoutSettingsList[i].ltSType == "image")
+                                    {
+                                        <div class="form-group">
+                                            <label class="control-label col-md-2" for="set_ltSContent">@Model.LayoutSettingsList[i].ltSType</label>
+                                            <div class="col-sm-5">
+                                                @Html.TextBoxFor(m => m.LayoutSettingsList[i].ltSContent, new { @class = "form-control", @readonly = "readonly" })
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <div class="input-group">
+                                                    <input type="file" id="FileUpload" accept=".jpeg,.png" class="form-control" />
+                                                    <div class="input-group-btn">
+                                                        <input type="button" value="Upload" settingsid="@Model.LayoutSettingsList[i].ltSId" inoutid="@Html.IdFor(m => m.LayoutSettingsList[i].ltSContent)" class="upload btn btn-default" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else if (Model.LayoutSettingsList[i].ltSType == "browser")
+                                    {
+                                        <div class="form-group">
+                                            <label class="control-label col-md-2" for="set_ltSContent">@Model.LayoutSettingsList[i].ltSType</label>
+                                            <div class="col-sm-5">
+                                                @Html.TextBoxFor(m => m.LayoutSettingsList[i].ltSContent, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    }
+                                    else if (Model.LayoutSettingsList[i].ltSType == "text")
+                                    {
+                                        <div class="form-group">
+                                            <label class="control-label col-md-2" for="set_ltSContent">@Model.LayoutSettingsList[i].ltSType</label>
+                                            <div class="col-sm-5">
+                                                @Html.TextBoxFor(m => m.LayoutSettingsList[i].ltSContent, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    }
+                                    else if (Model.LayoutSettingsList[i].ltSType == "video")
+                                    {
+                                        <div class="form-group">
+                                            <label class="control-label col-md-2" for="set_ltSContent">@Model.LayoutSettingsList[i].ltSType</label>
+                                            <div class="col-sm-5">
+                                                @Html.TextBoxFor(m => m.LayoutSettingsList[i].ltSContent, new { @class = "form-control", @readonly = "readonly" })
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <div class="input-group">
+                                                    <input type="file" id="FileUpload" accept=".mpg4" class="form-control" />
+                                                    <div class="input-group-btn">
+                                                        <input type="button" value="Upload" settingsid="@Model.LayoutSettingsList[i].ltSId" inoutid="@Html.IdFor(m => m.LayoutSettingsList[i].ltSContent)" class="upload btn btn-default" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (Model.DeviceIO != null)
+            {
+                <div class="col-lg-12">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">LayoutIO</h3>
+                        </div>
+                        <div class="form-horizontal">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="box-body">
+                                @for (int i = 0; i < Model.DeviceIO.Count; i++)
+                                {
+                                    @Html.HiddenFor(Model => Model.DeviceIO[i].ioId)
+                                    if (Model.DeviceIO[i].ioType == "1")
+                                    {
+                                        <div class="form-group">
+                                            <label class="control-label col-md-2" for="set_ltSContent">Είσοδος Όνομα</label>
+                                            <div class="col-sm-2">
+                                                @Html.TextBoxFor(m => m.DeviceIO[i].ioName, new { @class = "form-control" })
+                                            </div>
+                                            <label class="control-label col-sm-1" for="set_ltSContent">PortID</label>
+                                            <div class="col-sm-2">
+                                                @Html.TextBoxFor(m => m.DeviceIO[i].ioPortName, new { @class = "form-control" })
+                                            </div>
+                                            <div class="col-sm-2">
+                                                @Html.HiddenFor(Model => Model.DeviceIO[i].ioValType)
+                                                <select class="dropdowndevType form-control valid" valtypeid="@Html.IdFor(m => m.DeviceIO[i].ioValType)">
+                                                    <option value="bit">Bit</option>
+                                                    <option value="string">String</option>
+                                                    <option value="int">Int</option>
+                                                    <option value="double">Double</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    }
+
+                                    else if (Model.DeviceIO[i].ioType == "2")
+                                    {
+                                        <div class="form-group">
+                                            <label class="control-label col-md-2" for="set_ltSContent">Έξοδος Όνομα</label>
+                                            <div class="col-sm-2">
+                                                @Html.TextBoxFor(m => m.DeviceIO[i].ioName, new { @class = "form-control" })
+                                            </div>
+                                            <label class="control-label col-sm-1" for="set_ltSContent">PortID</label>
+                                            <div class="col-sm-2">
+                                                @Html.TextBoxFor(m => m.DeviceIO[i].ioPortName, new { @class = "form-control" })
+                                            </div>
+                                            <div class="col-sm-2">
+                                                @Html.HiddenFor(Model => Model.DeviceIO[i].ioValType)
+                                                <select class="dropdowndevType form-control valid" valtypeid="@Html.IdFor(m => m.DeviceIO[i].ioValType)">
+                                                    <option value="bit">Bit</option>
+                                                    <option value="string">String</option>
+                                                    <option value="int">Int</option>
+                                                    <option value="double">Double</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    }
+                                    else if (Model.DeviceIO[i].ioType == "3")
+                                    {
+                                        <div class="form-group">
+                                            <label class="control-label col-md-2" for="set_ltSContent">Εικονική Όνομα</label>
+                                            <div class="col-sm-2">
+                                                @Html.TextBoxFor(m => m.DeviceIO[i].ioName, new { @class = "form-control" })
+                                            </div>
+                                            <label class="control-label col-sm-1" for="set_ltSContent">VirtualId</label>
+                                            <div class="col-sm-2">
+                                                @Html.TextBoxFor(m => m.DeviceIO[i].ioPortName, new { @class = "form-control" })
+                                            </div>
+                                            <div class="col-sm-2">
+                                                @Html.HiddenFor(Model => Model.DeviceIO[i].ioValType)
+                                                <select class="dropdowndevType form-control valid" valtypeid="@Html.IdFor(m => m.DeviceIO[i].ioValType)">
+                                                    <option value="bit">Bit</option>
+                                                    <option value="string">String</option>
+                                                    <option value="int">Int</option>
+                                                    <option value="double">Double</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
             <div class="col-lg-12">
                 <div class="box box-info">
                     <div class="box-header with-border">
                         <h3 class="box-title">Layout</h3>
                     </div>
-                    <div class="form-horizontal">
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        <div class="box-body">
-                            @for (int i = 0; i < Model.LayoutSettingsList.Count; i++)
-                            {
-                                if (Model.LayoutSettingsList[i].ltSType == "image")
-                                {
-                                    <div class="form-group">
-                                        <label class="control-label col-md-2" for="set_ltSContent">@Model.LayoutSettingsList[i].ltSType</label>
-                                        <div class="col-sm-5">
-                                            @Html.TextBoxFor(m => m.LayoutSettingsList[i].ltSContent, new { @class = "form-control", @readonly = "readonly" })
-                                        </div>
-                                        <div class="col-sm-5">
-                                            <div class="input-group">
-                                                <input type="file" id="FileUpload" accept=".jpeg,.png" class="form-control" />
-                                                <div class="input-group-btn">
-                                                    <input type="button" id="Upload" value="Upload" settingsid="@Model.LayoutSettingsList[i].ltSId" inoutid="@Html.IdFor(m => m.LayoutSettingsList[i].ltSContent)" class="btn btn-default" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
-
-                                else if (Model.LayoutSettingsList[i].ltSType == "browser")
-                                {
-                                    <div class="form-group">
-                                        <label class="control-label col-md-2" for="set_ltSContent">@Model.LayoutSettingsList[i].ltSType</label>
-                                        <div class="col-sm-5">
-                                            @Html.TextBoxFor(m => m.LayoutSettingsList[i].ltSContent, new { @class = "form-control" })
-                                        </div>
-                                    </div>
-                                }
-                                else if (Model.LayoutSettingsList[i].ltSType == "text")
-                                {
-                                    <div class="form-group">
-                                        <label class="control-label col-md-2" for="set_ltSContent">@Model.LayoutSettingsList[i].ltSType</label>
-                                        <div class="col-sm-5">
-                                            @Html.TextBoxFor(m => m.LayoutSettingsList[i].ltSContent, new { @class = "form-control" })
-                                        </div>
-                                    </div>
-                                }
-                                else if (Model.LayoutSettingsList[i].ltSType == "video")
-                                {
-                                    <div class="form-group">
-                                        <label class="control-label col-md-2" for="set_ltSContent">@Model.LayoutSettingsList[i].ltSType</label>
-                                        <div class="col-sm-5">
-                                            @Html.TextBoxFor(m => m.LayoutSettingsList[i].ltSContent, new { @class = "form-control", @readonly = "readonly" })
-                                        </div>
-                                        <div class="col-sm-5">
-                                            <div class="input-group">
-                                                <input type="file" id="FileUpload" accept=".mpg4" class="form-control" />
-                                                <div class="input-group-btn">
-                                                    <input type="button" id="Upload" value="Upload" settingsid="@Model.LayoutSettingsList[i].ltSId" class="btn btn-default" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
-                            }
-                            <div class="box-footer">
-                                @Html.ActionLink("Πίσω", "Index", null, new { @class = "btn btn-default" })
-                                <input type="submit" value="Αποθήκευση" class="btn btn-info pull-right" />
-                            </div>
-                        </div>
+                    <div class="box-footer">
+                        @Html.ActionLink("Πίσω", "Index", null, new { @class = "btn btn-default" })
+                        <input type="submit" value="Αποθήκευση" class="btn btn-info pull-right" />
                     </div>
                 </div>
             </div>
@@ -96,26 +193,29 @@
 @section Scripts{
     <script>
         $(document).ready(function () {
-            $("#Upload").click(function () {
+            $('.dropdowndevType').change(function () {
+                var data = $(this).attr('valtypeid');
+                document.getElementById(data).value = $(this).val();
+            });
+
+            $(".upload").click(function () {
                 var formData = new FormData();
                 var totalFiles = document.getElementById("FileUpload").files.length;
-                var id = document.getElementById("Upload").getAttribute("settingsid");
-                var inoutid = document.getElementById("Upload").getAttribute("inoutid");
+                var id = document.getElementById("idlu").value;
+                var inoutid = $(this).attr('inoutid');
                 for (var i = 0; i < totalFiles; i++) {
                     var file = document.getElementById("FileUpload").files[i];
                     formData.append("FileUpload", file);
                 }
                 $.ajax({
                     type: "POST",
-                    url: '/Layouts/Upload/' + id,
+                    url: '/WebApp/Layouts/Upload/' + id,
                     data: formData,
                     dataType: 'json',
                     contentType: false,
                     processData: false,
-                    success: function (response) {
-
-                        document.getElementById(inoutid).value = "Johnny Bravo";
-                        alert(response.responseText);
+                    success: function (response) {                        
+                        document.getElementById(inoutid).value = 'http://192.168.0.97/WebApp/files/' + id + '/' + response.responseText;
                     },
                     error: function (error) {
                         alert("errror");

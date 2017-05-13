@@ -59,7 +59,78 @@ namespace WebApp.Controllers
             {
                 ViewdevLayout.Devlayout.dvLtVersion = "1";
                 ViewdevLayout.Devlayout.dvLtLastUpdate = DateTime.Now.ToString();
-                if(ViewdevLayout.Devlayout.dvLtType == 1)
+                if (ViewdevLayout.Devlayout.dvLtType == 1)
+                {
+                    
+                    db.DevLayout.Add(ViewdevLayout.Devlayout);
+                    db.SaveChanges();
+                    if (ViewdevLayout.result != null)
+                    {
+                        string[] sett = ViewdevLayout.result.Split('#');
+                        foreach (string s in sett)
+                        {
+                            if (s != "")
+                            {
+                                LayoutSettings layouteset = new LayoutSettings();
+                                string[] data = s.Split(';');
+                                foreach (string v in data)
+                                {
+                                    string[] val = v.Split(':');
+                                    if (val[0] == "type")
+                                        layouteset.ltSType = val[1];
+                                    else if (val[0] == "left")
+                                        layouteset.ItSPosition += val[0] + ":" + val[1] + ";";
+                                    else if (val[0] == "top")
+                                        layouteset.ItSPosition += val[0] + ":" + val[1] + ";";
+                                    else if (val[0] == "width")
+                                        layouteset.ItSPosition += val[0] + ":" + val[1] + ";";
+                                    else if (val[0] == "height")
+                                        layouteset.ItSPosition += val[0] + ":" + val[1] + ";";
+                                }
+                                layouteset.ltSDevLayoutId = ViewdevLayout.Devlayout.dvLtAutoId;
+                                db.LayoutSettings.Add(layouteset);
+                                db.SaveChanges();
+                            }
+                        }
+                        string subPath = ViewdevLayout.Devlayout.dvLtAutoId.ToString();
+                        System.IO.Directory.CreateDirectory(Server.MapPath("~/files/" + subPath));
+                    }
+
+                    DeviceIO addnew;
+                    for (int i = 0; i < ViewdevLayout.inputCount; i++)
+                    {
+                        addnew = new DeviceIO
+                        {
+                            ioType = "1",
+                            ioDeviceId = ViewdevLayout.Devlayout.dvLtAutoId,
+                            ioValType = "bit"
+                        };
+                        db.DeviceIO.Add(addnew);
+                    }
+                    for (int i = 0; i < ViewdevLayout.outputCount; i++)
+                    {
+                        addnew = new DeviceIO
+                        {
+                            ioType = "2",
+                            ioDeviceId = ViewdevLayout.Devlayout.dvLtAutoId,
+                            ioValType = "bit"
+                        };
+                        db.DeviceIO.Add(addnew);
+                    }
+                    for (int i = 0; i < ViewdevLayout.virtualCount; i++)
+                    {
+                        addnew = new DeviceIO
+                        {
+                            ioType = "3",
+                            ioDeviceId = ViewdevLayout.Devlayout.dvLtAutoId,
+                            ioValType = "string"
+                        };
+                        db.DeviceIO.Add(addnew);
+                    }
+                    db.SaveChanges();
+                    return RedirectToAction("Settings", new { id = ViewdevLayout.Devlayout.dvLtAutoId });
+                }
+                else if (ViewdevLayout.Devlayout.dvLtType == 2)
                 {
                     string[] sett = ViewdevLayout.result.Split('#');
                     db.DevLayout.Add(ViewdevLayout.Devlayout);
@@ -90,22 +161,48 @@ namespace WebApp.Controllers
                         }
                     }
                     string subPath = ViewdevLayout.Devlayout.dvLtAutoId.ToString();
-                    System.IO.Directory.CreateDirectory(Server.MapPath("~/files/" + subPath));
+                    System.IO.Directory.CreateDirectory(Server.MapPath("~/files/" + subPath));                    
                     return RedirectToAction("Settings", new { id = ViewdevLayout.Devlayout.dvLtAutoId });
                 }
-            }
-            else
-            {
-                DeviceIO addnew;
-                for (int i=0;i< ViewdevLayout.inputCount;i++)
+                else if (ViewdevLayout.Devlayout.dvLtType == 3)
                 {
-                    addnew = new DeviceIO {
-                        ioType = "1",
-                       
-                    };
+                    db.DevLayout.Add(ViewdevLayout.Devlayout);
+                    db.SaveChanges();
+                    DeviceIO addnew;
+                    for (int i = 0; i < ViewdevLayout.inputCount; i++)
+                    {
+                        addnew = new DeviceIO
+                        {
+                            ioType = "1",
+                            ioDeviceId = ViewdevLayout.Devlayout.dvLtAutoId,
+                            ioValType = "bit"
+                        };
+                        db.DeviceIO.Add(addnew);
+                    }
+                    for (int i = 0; i < ViewdevLayout.outputCount; i++)
+                    {
+                        addnew = new DeviceIO
+                        {
+                            ioType = "2",
+                            ioDeviceId = ViewdevLayout.Devlayout.dvLtAutoId,
+                            ioValType = "bit"
+                        };
+                        db.DeviceIO.Add(addnew);
+                    }
+                    for (int i = 0; i < ViewdevLayout.virtualCount; i++)
+                    {
+                        addnew = new DeviceIO
+                        {
+                            ioType = "3",
+                            ioDeviceId = ViewdevLayout.Devlayout.dvLtAutoId,
+                            ioValType = "string"
+                        };
+                        db.DeviceIO.Add(addnew);
+                    }
+                    db.SaveChanges();
+                    return RedirectToAction("Settings", new { id = ViewdevLayout.Devlayout.dvLtAutoId });
                 }
-                 
-            }
+            }            
             return View(ViewdevLayout);
         }
 
@@ -116,9 +213,12 @@ namespace WebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             List<LayoutSettings> devLayout = db.LayoutSettings.Where(ls => ls.ltSDevLayoutId == id).ToList();
+            List<DeviceIO> devLayoutIO = db.DeviceIO.Where(ls => ls.ioDeviceId == id).ToList();
             ViewLayoutSettings viewlayout = new ViewLayoutSettings
             {
-                LayoutSettingsList = devLayout
+                idlu = id.Value,
+                LayoutSettingsList = devLayout,
+                DeviceIO = devLayoutIO
             };
             if (devLayout == null)
             {
@@ -127,20 +227,59 @@ namespace WebApp.Controllers
             return View(viewlayout);
         }
 
+        public ActionResult SettingsIO(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            List<DeviceIO> devLayoutIO = db.DeviceIO.Where(ls => ls.ioDeviceId == id).ToList();
+            ViewDeviceIO viewlayoutIO = new ViewDeviceIO
+            {
+                DeviceIO = devLayoutIO
+            };
+            if (devLayoutIO == null)
+            {
+                return HttpNotFound();
+            }
+            return View(viewlayoutIO);
+        }
+
+        public ActionResult monitoring(int? id)
+        {
+            
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SettingsIO(ViewDeviceIO viewlayoutIO)
+        {
+            for(int i=0;i<viewlayoutIO.DeviceIO.Count;i++)
+            {
+                DeviceIO data = db.DeviceIO.Find(viewlayoutIO.DeviceIO[i].ioId);
+                data.ioName = viewlayoutIO.DeviceIO[i].ioName;
+                data.ioValType = viewlayoutIO.DeviceIO[i].ioValType;
+            }
+            return RedirectToAction("SettingsIO");
+        }
+
 
         [HttpPost]
         public ActionResult Upload(int? id)
         {
+            string fileName = "error";
             for (int i = 0; i < Request.Files.Count; i++)
             {
                 var file = Request.Files[i];
 
-                var fileName = Path.GetFileName(file.FileName);
-
+                fileName = Path.GetFileName(file.FileName);
+                string path2 = Server.MapPath("~");
                 var path = Path.Combine(Server.MapPath("~/files/" + id + "/"), fileName);
+                
+                
                 file.SaveAs(path);
             }
-            return Json(new { success = true, responseText = "Your message successfuly sent!" }, JsonRequestBehavior.AllowGet);
+            return Json(new { success = true, responseText = fileName }, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -148,6 +287,27 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Settings(ViewLayoutSettings LayoutSetting)
         {
+            if (LayoutSetting.LayoutSettingsList != null)
+            {
+                for (int i = 0; i < LayoutSetting.LayoutSettingsList.Count; i++)
+                {
+                    LayoutSettings data = db.LayoutSettings.Find(LayoutSetting.LayoutSettingsList[i].ltSId);
+                    data.ltSContent = LayoutSetting.LayoutSettingsList[i].ltSContent;
+                    db.SaveChanges();
+                }
+            }
+            if (LayoutSetting.DeviceIO != null)
+            {
+                for (int i = 0; i < LayoutSetting.DeviceIO.Count; i++)
+                {
+                    DeviceIO data = db.DeviceIO.Find(LayoutSetting.DeviceIO[i].ioId);
+                    data.ioName = LayoutSetting.DeviceIO[i].ioName;
+                    data.ioPortName = LayoutSetting.DeviceIO[i].ioPortName;
+                    data.ioValType = LayoutSetting.DeviceIO[i].ioValType;
+                    db.SaveChanges();
+                }
+            }
+
             return RedirectToAction("Index");
         }
 

@@ -30,6 +30,7 @@ namespace WebApp
         public string devAdmin { get; set; }
         public string devPass { get; set; }
         public Nullable<int> devLayoutId { get; set; }
+        public Nullable<int> devLayoutIOId { get; set; }
     
         public virtual DevLayout DevLayout { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

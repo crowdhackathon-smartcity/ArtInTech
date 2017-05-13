@@ -80,6 +80,10 @@
                                 @Html.DisplayFor(modelItem => item.devPass)
                             </td>
                             <td>
+                                @if (item.devLayoutId != null)
+                                {
+                                    @Html.ActionLink("Monitoring |", "monitoring", "Layouts", new { id = item.devAutoId }, null)
+                                }
                                 @Html.ActionLink("Edit", "Edit", new { id = item.devAutoId }) |
                                 @Html.ActionLink("Details", "Details", new { id = item.devAutoId }) |
                                 @Html.ActionLink("Delete", "Delete", new { id = item.devAutoId })

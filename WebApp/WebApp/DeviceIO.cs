@@ -16,10 +16,11 @@ namespace WebApp
     {
         public int ioId { get; set; }
         public string ioName { get; set; }
+        public string ioPortName { get; set; }
         public string ioType { get; set; }
         public string ioValType { get; set; }
         public string ioValue { get; set; }
-        public Nullable<int> ioDevId { get; set; }
+        public Nullable<int> ioDeviceId { get; set; }
     
         public virtual DevLayout DevLayout { get; set; }
     }

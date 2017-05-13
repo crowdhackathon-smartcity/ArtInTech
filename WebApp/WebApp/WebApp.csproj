@@ -225,6 +225,7 @@
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\api\DevicesController.cs" />
+    <Compile Include="Controllers\api\DevioController.cs" />
     <Compile Include="Controllers\DevicesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LayoutsController.cs" />
@@ -266,6 +267,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\NotificationExtensions.cs" />
+    <Compile Include="Models\ViewModel\ViewDeviceIO.cs" />
     <Compile Include="Models\ViewModel\ViewDevices.cs" />
     <Compile Include="Models\ViewModel\ViewEditUser.cs" />
     <Compile Include="Models\ViewModel\ViewLayout.cs" />
@@ -542,9 +544,11 @@
     <Content Include="Views\Layouts\Index.cshtml" />
     <Content Include="Views\Layouts\Settings.cshtml" />
     <Content Include="Views\Layouts\SettingsIO.cshtml" />
+    <Content Include="Views\Layouts\monitoring.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="files\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
