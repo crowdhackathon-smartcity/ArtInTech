@@ -226,6 +226,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\api\DevicesController.cs" />
     <Compile Include="Controllers\api\DevioController.cs" />
+    <Compile Include="Controllers\api\getiovalController.cs" />
+    <Compile Include="Controllers\api\setiovalController.cs" />
     <Compile Include="Controllers\DevicesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LayoutsController.cs" />
@@ -363,6 +365,7 @@
     <Content Include="img\logo-bl.png" />
     <Content Include="img\logo.png" />
     <Content Include="img\logo_mini.png" />
+    <Content Include="img\Screenshot.png" />
     <Content Include="img\User.png" />
     <Content Include="Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -374,6 +377,10 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Content Include="plugins\Customizable\BokehFrost.jpg" />
+    <Content Include="plugins\Customizable\doc.html" />
+    <Content Include="plugins\Customizable\index.html" />
+    <Content Include="plugins\Customizable\jquery.AshAlom.gaugeMeter-2.0.0.min.js" />
     <Content Include="plugins\Layouts\browser.png" />
     <Content Include="plugins\Layouts\custom.js" />
     <Content Include="plugins\Layouts\image.png" />
@@ -469,6 +476,8 @@
     <Content Include="Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <Content Include="plugins\Customizable\LICENSE" />
+    <Content Include="plugins\Customizable\readme.md" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />

@@ -319,11 +319,28 @@ namespace WebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             DevLayout devLayout = db.DevLayout.Find(id);
+
+            List<LayoutSettings> set = db.LayoutSettings.Where(sl => sl.ltSDevLayoutId == devLayout.dvLtAutoId).ToList();
+
+            string res = "";
+            if (set.Count > 0)
+            {                
+                for (int i = 0; i < set.Count; i++)
+                {
+                    res += "id:" + (i+1) + ";type:" + set[i].ltSType + ";" + set[i].ItSPosition;
+                    res = res.Remove(res.Length - 1, 1);
+                    res += "#";
+                }
+            }
+            ViewLayout veilout = new ViewLayout {
+                Devlayout = devLayout,
+                result = res
+            };
             if (devLayout == null)
             {
                 return HttpNotFound();
             }
-            return View(devLayout);
+            return View(veilout);
         }
 
         // POST: Layouts/Edit/5

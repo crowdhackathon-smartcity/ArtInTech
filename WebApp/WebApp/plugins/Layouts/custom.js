@@ -30,7 +30,7 @@ $(function () {
                     //alert( style );					
                     $(".droppable").append('<div id="' + idn + '" attr-type="' + type + '" class="elem-' + idn + ' draggable ui-widget-content"' +
 					'style="' + style + '">' +
-					'<img src="' + type + '.png"/><span class="eclose">x</span></div>');
+					'<img src="/WebApp/plugins/Layouts/' + type + '.png"/><span class="eclose">x</span></div>');
                     setElementFunctions(idn);
                     idn++;
                 }

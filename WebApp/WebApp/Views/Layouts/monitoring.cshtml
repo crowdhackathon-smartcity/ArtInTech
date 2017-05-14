@@ -4,9 +4,198 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>monitoring</h2>
+<section class="content-header">
+    <h1>
+        Layouts
+    </h1>
 
-<div class="make-switch">
-    <input type="checkbox">
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index", "Dashboard")"><i class="fa fa-dashboard"></i> Αρχική</a></li>
+        <li class="active">Layouts</li>
+    </ol>
+</section>
+<div class="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <div class="row">
+                        <div class="col-lg-3 col-xs-12">
+                            <!-- small box -->
+                            <div class="small-box bg-green">
+                                <div class="inner">
+                                    <h3>Θερμ/σία</h3>
+                                    <h3><span class="label label-success" id="temp">0</span><sup style="font-size: 20px">C</sup></h3>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-wifi"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-3 col-xs-12">
+                            <!-- small box -->
+                            <div class="small-box bg-green">
+                                <div class="inner">
+                                    <h3>Υγρασία</h3>
+                                    <h3><span class="label label-success" id="hum">0</span><sup style="font-size: 20px">%</sup></h3>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-wifi"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-3 col-xs-12">
+                            <!-- small box -->
+                            <div class="small-box bg-green">
+                                <div class="inner">
+                                    <h3>Πανικός</h3>
+                                    <h3><span class="label label-success" id="pan">0</span><sup style="font-size: 20px"></sup></h3>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-wifi"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-xs-12">
+                            
+                        </div>                       
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-xs-12">
+                            <input id="39" type="checkbox" name="gender" value="male"> RED<br>
+                            <input id="38" type="checkbox" name="gender" value="male"> YELLOW<br>
+                            <input id="37" type="checkbox" name="gender" value="male"> GREEN<br>
+                        </div>
+                    </div>
+                </div>
+            </div>                       
+        </div>
+    </div>
 </div>
 
+@section Scripts{
+    <script>
+        var myVar = setInterval(myTimer, 1500);
+
+        function myTimer() {
+            if ($('#39').is(':checked'))
+            {
+                $.ajax({
+                    type: 'GET',
+                    cache: false,
+                    url: '/WebApp/api/setioval?id=39&val=1',
+                    success: function (data) {
+                        
+                    },
+                    fail: function (data) {
+                        
+                    }
+                });
+            }
+            else
+            {
+                $.ajax({
+                    type: 'GET',
+                    cache: false,
+                    url: '/WebApp/api/setioval?id=39&val=0',
+                    success: function (data) {
+                        
+                    },
+                    fail: function (data) {
+                        
+                    }
+                });
+            }
+            if ($('#38').is(':checked')) {
+                $.ajax({
+                    type: 'GET',
+                    cache: false,
+                    url: '/WebApp/api/setioval?id=38&val=1',
+                    success: function (data) {
+                        
+                    },
+                    fail: function (data) {
+                        
+                    }
+                });
+            }
+            else {
+                $.ajax({
+                    type: 'GET',
+                    cache: false,
+                    url: '/WebApp/api/setioval?id=38&val=0',
+                    success: function (data) {
+                        
+                    },
+                    fail: function (data) {
+                        
+                    }
+                });
+            }
+            if ($('#37').is(':checked')) {
+                $.ajax({
+                    type: 'GET',
+                    cache: false,
+                    url: '/WebApp/api/setioval?id=37&val=1',
+                    success: function (data) {
+                        
+                    },
+                    fail: function (data) {
+                        
+                    }
+                });
+            }
+            else {
+                $.ajax({
+                    type: 'GET',
+                    cache: false,
+                    url: '/WebApp/api/setioval?id=37&val=0',
+                    success: function (data) {
+                        
+                    },
+                    fail: function (data) {
+                        
+                    }
+                });
+            }
+
+
+            $.ajax({
+                type: 'GET',
+                cache: false,
+                url: '/WebApp/api/getioval/40',
+                success: function (data) {
+                    $("#temp").text(data);
+                },
+                fail: function (data) {
+                    $("#temp").text('Error');
+                }
+            });
+            $.ajax({
+                type: 'GET',
+                cache: false,
+                url: '/WebApp/api/getioval/41',
+                success: function (data) {
+                    $("#hum").text(data);
+                },
+                fail: function (data) {
+                    $("#hum").text('Error');
+                }
+            });
+
+            $.ajax({
+                type: 'GET',
+                cache: false,
+                url: '/WebApp/api/getioval/36',
+                success: function (data) {
+                    $("#pan").text(data);
+                },
+                fail: function (data) {
+                    $("#pan").text('Error');
+                }
+            });
+        }
+    </script>
+}
