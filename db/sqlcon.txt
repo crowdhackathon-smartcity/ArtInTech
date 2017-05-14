@@ -1,0 +1,1 @@
+Data Source=localhost;Initial Catalog=haca;Persist Security Info=True;User ID=sa;Password=techpl@ce.gr

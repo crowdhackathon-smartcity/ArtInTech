@@ -15,8 +15,6 @@ namespace WebApp.Controllers.api
         public string Getgetioval(int id)
         {
             DeviceIO io = db.DeviceIO.Find(id);
-
-
             return io.ioValue.ToString();
         }
     }

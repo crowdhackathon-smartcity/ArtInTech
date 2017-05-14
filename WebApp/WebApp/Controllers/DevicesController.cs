@@ -12,6 +12,7 @@ using WebApp.Models.ViewModel;
 
 namespace WebApp.Controllers
 {
+    [Authorize]
     public class DevicesController : Controller
     {
         private hacaEntities db = new hacaEntities();

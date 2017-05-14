@@ -12,6 +12,7 @@ using WebApp.Models.ViewModel;
 
 namespace WebApp.Controllers
 {
+    [Authorize]
     public class LayoutsController : Controller
     {
         private hacaEntities db = new hacaEntities();
