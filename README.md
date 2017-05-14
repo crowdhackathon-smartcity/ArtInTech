@@ -15,3 +15,9 @@ Install-Package jQuery.UI.Combined
 https://select2.github.io/
 Select2 4.0.3
 https://github.com/select2/select2/releases/tag/4.0.3
+
+
+user: admin@admin.gr
+pass: P@ssw0rd
+test@test.gr
+pass: P@ssw0rd
