@@ -8,8 +8,7 @@
     mc:Ignorable="d">
 
     <Grid x:Name="rootGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBox x:Name="idTxtbx" HorizontalAlignment="Left" Margin="386,466,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="69" Width="1094" TextChanged="textBox_TextChanged"/>
-        <TextBox x:Name="status" HorizontalAlignment="Left" Margin="386,369,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="44" Width="623"/>
+        <TextBox x:Name="status" HorizontalAlignment="Left" Margin="1731,1026,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="44" Width="179"/>
        
 
 

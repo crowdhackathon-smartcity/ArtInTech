@@ -16,6 +16,9 @@ using Windows.Networking.BackgroundTransfer;
 using System.Threading;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.Storage.Streams;
+using System.Net;
+using Windows.Devices.Gpio;
+using Sensors.Dht;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -51,18 +54,19 @@ namespace raspTest
         {
             Rootobject rtNewObj = await  check_for_changes();
         }// timer tick
-        
+
+        Rootobject rootObj = null;
         private async void first_Json_Call()
         {
             MemoryStream ms = new MemoryStream();
-            ms = await myModule.GetMyStream("http://192.168.0.97/WebApp/api/devices?devApi=d855afb&devApiKey=073178a");
+            ms = await myModule.GetMyStream("http://192.168.0.97/WebApp/api/devices?devApi=e9fc8cd&devApiKey=490a54b");
 
             if (ms != null)
             {
-                Rootobject rootObj = new Rootobject();
+                rootObj = new Rootobject();
                 rootObj.GetMyRtData(ms);
                 rootObj.sendProperties();
-                string dim = rootObj.DevLayout.LayoutSettings[0].ItSPosition;
+               // string dim = rootObj.DevLayout.LayoutSettings[0].ItSPosition;
 
                 Layoutsetting[] lts = rootObj.DevLayout.LayoutSettings;
 
@@ -99,7 +103,18 @@ namespace raspTest
                             break;
                         case "text":
 
-
+                            string[] loctx = lts[i].ItSPosition.Split(':');
+                            elmntPos myPostx = new elmntPos(loctx[0], loctx[1], loctx[2], loctx[3]);
+                            TextBox txbx = new TextBox
+                            {
+                                Name = lts[i].ltSType + "osk" + i.ToString(),
+                                Width = myPostx.widgth,
+                                Height = myPostx.height,
+                                VerticalAlignment = Windows.UI.Xaml.VerticalAlignment.Top,
+                                HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Left,
+                                Text = lts[i].ltSContent
+                            };
+                            rootGrid.Children.Add(txbx);
                             break;
                         case "browser":
                             break;
@@ -107,7 +122,8 @@ namespace raspTest
                 }//for
 
                 layoutVersion = rootObj.DevLayout.dvLtVersion;
-                Init();
+                // Init();
+                initDevices(rootObj.DevLayout.DeviceIO);
             }//if
             
 
@@ -134,12 +150,120 @@ namespace raspTest
 
         }//btnConnect_Click
 
+        List<GpioPin> pins = new List<GpioPin>();
+        private void initDevices(DeviceIO[] devices)
+        {
+            pins = new List<GpioPin>();
+            for (int i = 0; i < devices.Length; i++)
+            {
+                if (devices[i].ioType == "1")//input
+                {
+                    int port = -1;
+                    int.TryParse(devices[i].ioPortName, out port);
+                    if (port > 0)
+                    {
+                        var gpio = GpioController.GetDefault();
+                        GpioPin pin = gpio.OpenPin(port);
+
+                        if (pin.IsDriveModeSupported(GpioPinDriveMode.InputPullUp))
+                            pin.SetDriveMode(GpioPinDriveMode.InputPullUp);
+                        else
+                            pin.SetDriveMode(GpioPinDriveMode.Input);
+
+                        pin.DebounceTimeout = TimeSpan.FromMilliseconds(50);
+
+                        // Register for the ValueChanged event so our buttonPin_ValueChanged 
+                        // function is called when the button is pressed
+                        pin.ValueChanged += buttonPin_ValueChanged;
+                        pins.Add(pin);
+                    }
+                }
+                else if (devices[i].ioType == "2")//output
+                {
+                    int port = -1;
+                    int.TryParse(devices[i].ioPortName, out port);
+                    if (port > 0)
+                    {
+                        var gpio = GpioController.GetDefault();
+                        GpioPin pin = null;
+                        pin = gpio.OpenPin(port);
+
+                        if (devices[i].ioValue == "0")
+                        {
+                            pin.Write(GpioPinValue.Low);
+                        }
+                        else if (devices[i].ioValue == "1")
+                        {
+                            pin.Write(GpioPinValue.High);
+                        }
+                        pin.SetDriveMode(GpioPinDriveMode.Output);
+                        pins.Add(pin);
+                    }
+                }
+                else if (devices[i].ioType == "3")//virtual
+                {
+                    int port = -1;
+                    int.TryParse(devices[i].ioPortName, out port);
+                    if (port > 0)
+                    {
+                        if (devices[i].ioName == "dhtTemp")
+                        {
+                            startDHT11(port);
+                        }
+                    }
+                }
+            }
+        }
+
+
+        private async void startDHT11(int port)
+        {
+            int realport = 5;
+            GpioPin pin = null;
+            pin = GpioController.GetDefault().OpenPin(realport, GpioSharingMode.Exclusive);
+            Dht11 _dht = new Dht11(pin, GpioPinDriveMode.Input);
+            pins.Add(pin);
+
+            DhtReading reading = new DhtReading();
+            reading = await _dht.GetReadingAsync().AsTask();
+            callURLAPI(1, reading.Temperature);
+            callURLAPI(2, reading.Humidity);
+        }
+
+
+        private void buttonPin_ValueChanged(GpioPin sender, GpioPinValueChangedEventArgs e)
+        {
+            Debug.WriteLine(DateTime.Now.ToString() + " Button Pin Press : " + sender.PinNumber);
+            int port = sender.PinNumber;
+            int value = 1;
+            callURLAPI(port, value);
+        }
+
+        private async void callURLAPI(int port, double value)
+        {
+            int ioId = 0;
+            for (int i = 0; i < rootObj.DevLayout.DeviceIO.Length; i++)
+            {
+                if (rootObj.DevLayout.DeviceIO[i].ioPortName == port.ToString())
+                {
+                    ioId = rootObj.DevLayout.DeviceIO[i].ioId;
+                }
+            }
+            string param = "?devApi=" + rootObj.devApi + "&devApiKey=" + rootObj.devApiKey + "&dbioId=" + ioId + "&ioValue=" + value + "";
+
+            HttpWebRequest webrequest = (HttpWebRequest)WebRequest.Create(@"http://192.168.0.97/WebApp/api/devio" + param);
+            WebResponse response = await webrequest.GetResponseAsync();
+            Debug.WriteLine("send ok");
+        }
+
+
+
 
         private async Task<Rootobject> check_for_changes()
         {
             Rootobject rootObjnow = new Rootobject();
             MemoryStream ms = new MemoryStream();
-            ms = await myModule.GetMyStream("http://192.168.0.97/WebApp/api/devices?devApi=d855afb&devApiKey=073178a");
+            ms = await myModule.GetMyStream("http://192.168.0.97/WebApp/api/devices?devApi=e9fc8cd&devApiKey=490a54b");
             Debug.WriteLine("zw");
             if (ms == null)
             {

@@ -13,7 +13,7 @@ namespace raspTest
 
     public class Rootobject
     {
-        public Rootobject(Deviceio[] devIO, Devlayout devLayout, object[] stuff, int devAutoId, string devCode, string devType, string devApi, string devApiKey, string devLocation, string devIP, string devAdmin, string devPass, int devLayoutId, int devLaytIOId)
+        public Rootobject(DeviceIO[] devIO, Devlayout devLayout, object[] stuff, int devAutoId, string devCode, string devType, string devApi, string devApiKey, string devLocation, string devIP, string devAdmin, string devPass, int devLayoutId, int devLaytIOId)
         {
             DeviceIO = devIO;
             DevLayout = devLayout;
@@ -33,7 +33,7 @@ namespace raspTest
 
         public Rootobject()
         {
-            DeviceIO = new Deviceio[0];
+            DeviceIO = new DeviceIO[0];
             DevLayout = new Devlayout();
             Stuff = new string[0];
             this.devAutoId = 0;
@@ -49,7 +49,7 @@ namespace raspTest
             this.devLayoutIOId = 0;
         }//Rootobject Constructor
 
-        public Deviceio[] DeviceIO { get; set; }
+        public DeviceIO[] DeviceIO { get; set; }
         public Devlayout DevLayout { get; set; }
         public object[] Stuff { get; set; }
         public int devAutoId { get; set; }
@@ -100,10 +100,11 @@ namespace raspTest
 
     public class Devlayout
     {
-        public Devlayout(object[] devices, Layoutsetting[] layoutSettings, int dvLtAutoId, string dvLtName, string dvLtVersion, string dvLtDescription, string dvLtLastUpdate, int dvLtTypes)
+        public Devlayout(object[] devices, DeviceIO[] DeviceIO0, Layoutsetting[] layoutSettings, int dvLtAutoId, string dvLtName, string dvLtVersion, string dvLtDescription, string dvLtLastUpdate, int dvLtTypes)
         {
             Devices = devices;
             LayoutSettings = layoutSettings;
+            DeviceIO = DeviceIO0;
             this.dvLtAutoId = dvLtAutoId;
             this.dvLtName = dvLtName;
             this.dvLtVersion = dvLtVersion;
@@ -116,6 +117,7 @@ namespace raspTest
         {
             Devices = new string[0]; 
             LayoutSettings = new Layoutsetting[0];
+            DeviceIO = new DeviceIO[0];
             this.dvLtAutoId = 0;
             this.dvLtName = "";
             this.dvLtVersion = "";
@@ -125,6 +127,7 @@ namespace raspTest
         }// Devlayout Constructor
 
         public object[] Devices { get; set; }
+        public DeviceIO[] DeviceIO { get; set; }
         public Layoutsetting[] LayoutSettings { get; set; }
         public int dvLtAutoId { get; set; }
         public string dvLtName { get; set; }
@@ -257,9 +260,9 @@ namespace raspTest
     }//Layoutsetting Class
 
 
-    public class Deviceio
+    public class DeviceIO
     {
-        public Deviceio(int ioId, string ioName, string ioPortName, string ioType, string ioValType, string ioValue, int ioDeviceId)
+        public DeviceIO(int ioId, string ioName, string ioPortName, string ioType, string ioValType, string ioValue, int ioDeviceId)
         {
             this.ioId = ioId;
             this.ioName = ioName;
@@ -270,7 +273,7 @@ namespace raspTest
             this.ioDeviceId = ioDeviceId;
         }//Deviceio Constructor Valued
 
-        public Deviceio()
+        public DeviceIO()
         {
             this.ioId = 0;
             this.ioName = "";
